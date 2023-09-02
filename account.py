@@ -39,8 +39,6 @@ class Account:
         return self.__limit
 
 # Setters
-    def set_balance(self, balance):
-        self.__balance = balance
 
     def set_limit(self, limit):
         self.__limit = limit
