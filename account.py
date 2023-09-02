@@ -18,13 +18,13 @@ class Account:
     def deposit(self, amount):
         self.__balance += amount
 
-    def can_withdraw(self, amount_to_withdraw):
+    def __can_withdraw(self, amount_to_withdraw):
         amount_available = (self.__balance + self.__limit)
         return amount_to_withdraw <= amount_available
 
     def withdraw(self, amount):
 
-        if (self.can_withdraw(amount)):
+        if (self.__can_withdraw(amount)):
             self.__balance -= amount
         else:
             print("The Amount ${} has passed the limit".format(amount))
