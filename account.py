@@ -24,3 +24,23 @@ class Account:
     def transfer(self, amount, destination):
         self.withdraw(amount)
         destination.deposit(amount)
+
+# Getters
+    def get_number(self):
+        return self.__number
+
+    def get_holder(self):
+        return self.__holder
+
+    def get_balance(self):
+        return self.__balance
+
+    def get_limit(self):
+        return self.__limit
+
+# Setters
+    def set_balance(self, balance):
+        self.__balance = balance
+
+    def set_limit(self, limit):
+        self.__limit = limit
