@@ -33,30 +33,29 @@ class CreateAccountView(QMainWindow):
         title_label.adjustSize()
         title_label.move((self.width() - title_label.width()) // 2, 250)
 
-        # # Campo de Usuário
-        # username_input = QLineEdit(self)
-        # username_input.setPlaceholderText("User Name")
-        # username_input_width = 200
-        # username_input.setGeometry(
-        #     (self.width() - username_input_width) // 2, 320, username_input_width, 30)
-        # username_input.setStyleSheet(
-        #     "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
+        username_input = QLineEdit(self)
+        username_input.setPlaceholderText("User Name")
+        username_input_width = 200
+        username_input.setGeometry(
+            (self.width() - username_input_width) // 2, 320, username_input_width, 30)
+        username_input.setStyleSheet(
+            "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
-        # email_input = QLineEdit(self)
-        # email_input.setPlaceholderText("User Name")
-        # email_input_width = 200
-        # email_input.setGeometry(
-        #     (self.width() - email_input_width) // 2, 360, email_input_width, 30)
-        # email_input.setStyleSheet(
-        #     "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
+        email_input = QLineEdit(self)
+        email_input.setPlaceholderText("User Name")
+        email_input_width = 200
+        email_input.setGeometry(
+            (self.width() - email_input_width) // 2, 360, email_input_width, 30)
+        email_input.setStyleSheet(
+            "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
-        # password_input = QLineEdit(self)
-        # password_input.setPlaceholderText("Password")
-        # password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        # password_input.setGeometry(
-        #     (self.width() - username_input_width) // 2, 400, username_input_width, 30)
-        # password_input.setStyleSheet(
-        #     "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
+        password_input = QLineEdit(self)
+        password_input.setPlaceholderText("Password")
+        password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        password_input.setGeometry(
+            (self.width() - username_input_width) // 2, 400, username_input_width, 30)
+        password_input.setStyleSheet(
+            "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
         # back_to_login_button = QPushButton("Back", self)
         # back_to_login_button.setGeometry(
