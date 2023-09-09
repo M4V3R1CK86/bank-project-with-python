@@ -29,3 +29,24 @@ class LoginView(QMainWindow):
         title_label.adjustSize()  # Adjust the label size based on its content
         title_label.move((self.width() - title_label.width()) //
                          2, 250)  # Center the label horizontally
+
+        # Create a username input field
+        self.username_input = QLineEdit(self)
+        self.username_input.setPlaceholderText(
+            "User")  # Set a placeholder text
+        username_input_width = 200  # Define the desired width
+        self.username_input.setGeometry(
+            (self.width() - username_input_width) // 2, 320, username_input_width, 30)  # Set geometry and position
+        self.username_input.setStyleSheet(
+            "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")  # Style the input field
+
+        # Create a password input field
+        self.password_input = QLineEdit(self)
+        self.password_input.setPlaceholderText(
+            "Password")  # Set a placeholder text
+        self.password_input.setEchoMode(
+            QLineEdit.EchoMode.Password)  # Mask the password text
+        self.password_input.setGeometry(
+            (self.width() - username_input_width) // 2, 360, username_input_width, 30)  # Set geometry and position
+        self.password_input.setStyleSheet(
+            "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")  # Style the input field
