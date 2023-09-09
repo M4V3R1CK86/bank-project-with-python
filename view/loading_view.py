@@ -1,5 +1,3 @@
-# view/loading_view.py
-
 from PyQt6.QtGui import QIcon, QMovie
 from PyQt6.QtWidgets import QLabel, QMainWindow
 
@@ -21,6 +19,15 @@ class LoadingView(QMainWindow):
         title_label = QLabel("DarkStar Bank", self)
         title_label.setStyleSheet("color: #eec1c0; font-size: 50px;")
         title_label.adjustSize()
-
         label_y = (self.height() - title_label.height()) // 2
         title_label.move((self.width() - title_label.width()) // 2, label_y)
+
+        loading_gif = QMovie('resources/img/gif/spinner.gif')
+
+        loading_label = QLabel(self)
+        loading_label.setMovie(loading_gif)
+        loading_gif.start()
+
+        loading_y = label_y + title_label.height() + 20
+        loading_label.move(
+            (self.width() - loading_gif.frameRect().width()) // 2, loading_y)
