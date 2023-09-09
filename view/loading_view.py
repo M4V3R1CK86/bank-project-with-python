@@ -17,3 +17,10 @@ class LoadingView(QMainWindow):
         x = (screen_geo.width() - self.width()) // 2
         y = (screen_geo.height() - self.height()) // 2
         self.move(x, y)
+
+        title_label = QLabel("DarkStar Bank", self)
+        title_label.setStyleSheet("color: #eec1c0; font-size: 50px;")
+        title_label.adjustSize()
+
+        label_y = (self.height() - title_label.height()) // 2
+        title_label.move((self.width() - title_label.width()) // 2, label_y)
