@@ -34,7 +34,7 @@ class CreateAccountView(QMainWindow):
         title_label.move((self.width() - title_label.width()) // 2, 250)
 
         username_input = QLineEdit(self)
-        username_input.setPlaceholderText("User Name")
+        username_input.setPlaceholderText("Full Name")
         username_input_width = 200
         username_input.setGeometry(
             (self.width() - username_input_width) // 2, 320, username_input_width, 30)
@@ -42,7 +42,7 @@ class CreateAccountView(QMainWindow):
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
         email_input = QLineEdit(self)
-        email_input.setPlaceholderText("User Name")
+        email_input.setPlaceholderText("E-mail")
         email_input_width = 200
         email_input.setGeometry(
             (self.width() - email_input_width) // 2, 360, email_input_width, 30)
@@ -57,13 +57,13 @@ class CreateAccountView(QMainWindow):
         password_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
+        # back_to_login_button.clicked.connect(self.back_to_login_clicked)
+
         # back_to_login_button = QPushButton("Back", self)
         # back_to_login_button.setGeometry(
         #     (self.width() - 200) // 2, 440, 50, 30)
         # back_to_login_button.setStyleSheet(
         #     "background-color: #eec1c0; color: #de9597; border-radius: 10px;")
-
-        # back_to_login_button.clicked.connect(self.back_to_login_clicked)
 
     # def login_view(self):
     #     self.lv = LoginView()
