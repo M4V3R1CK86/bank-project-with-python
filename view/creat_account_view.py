@@ -94,7 +94,12 @@ class CreateAccountView(QMainWindow):
         # Connect the back_button click event to a method (e.g., go_back_to_login)
         back_button.clicked.connect(self.go_back_to_login)
 
+    def set_controller(self, controller):
+        self.controller = controller
+
     # Define a method to handle the back button click event
     def go_back_to_login(self):
-        # Implement the logic to go back to the login view here
-        pass
+        self.close()  # Fecha a janela de criação de conta
+        if self.controller:
+            # Chama o método no controlador para mostrar a tela de login
+            self.controller.show_login_view()

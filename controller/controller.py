@@ -31,6 +31,7 @@ class ScreenController:
 
     def show_create_account_view(self):
         self.create_account_view = CreateAccountView()
+        self.create_account_view.set_controller(self)
         self.create_account_view.show()
         self.login_view.close()  # Close the login_view window.
 
