@@ -1,17 +1,11 @@
-from PyQt5.QtWidgets import *
+# main.py
 
+from PyQt6.QtWidgets import QApplication
 
-def main():
+from controller.controller import ScreenController
 
-    app = QApplication([])    # Creating app with an empty list
-    window = QWidget()      # Creating app window
-    # Create a new Label widget and set its text to "Hello world"
-    label1 = QLabel(window)
-    label1.setText("Hello World")
-    # putting the window running
-    window.show()
-    app.exec_()
-
-
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    app = QApplication([])
+    controller = ScreenController(app)
+    controller.show_loading_view()
+    app.exec()
