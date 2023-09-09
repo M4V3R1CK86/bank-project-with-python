@@ -1,5 +1,6 @@
 from PyQt6.QtCore import QTimer
 
+from view.creat_account_view import CreateAccountView
 from view.loading_view import LoadingView
 from view.login_view import LoginView
 
@@ -17,18 +18,22 @@ class ScreenController:
 
         # Show the loading view, making it visible to the user.
         self.loading_view.show()
-        # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
 
+        # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
         QTimer().singleShot(1000, self.show_login_view)
 
     def show_login_view(self):
-        # Define a method called show_login_view that belongs to the current class.
 
         self.login_view = LoginView()
-        # Create an instance of the LoginView class and assign it to the instance variable self.login_view.
-
+        self.login_view.controller = self  # Pass the controller instance
         self.login_view.show()
-        # Show the login_view window.
+        self.loading_view.close()  # Close the loading_view window.
 
-        self.loading_view.close()
-        # Close the loading_view window.
+    def show_create_account_view(self):
+        self.create_account_view = CreateAccountView()
+        self.create_account_view.show()
+
+    #  # Define the back_to_login_callback method here
+    # def back_to_login_callback(self):
+    #     # Implement the logic to go back to the login view
+    #     pass

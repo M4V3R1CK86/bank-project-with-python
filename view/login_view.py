@@ -71,6 +71,18 @@ class LoginView(QMainWindow):
         create_account_button.setCursor(QCursor(
             Qt.CursorShape.PointingHandCursor))  # Set cursor shape
 
+        # Connect the "Create Account" button to a slot method
+        create_account_button.clicked.connect(
+            self.on_create_account_button_clicked)
+
+    def set_controller(self, controller):
+        self.controller = controller  # Set the controller instance
+
+    def on_create_account_button_clicked(self):
+        # Slot method to handle the "Create Account" button click.
+        if self.controller:
+            self.controller.show_create_account_view()
+
     def validate_login(self):
         # Get the username and password from input fields
         username = self.username_input.text()
@@ -97,7 +109,7 @@ class LoginView(QMainWindow):
             msg.exec()
             msg.move(self.geometry().center())
 
-        # Check if username and password are correct (you can replace these with your own logic)
+        # Check if username and password are correct
         elif username != "correct_user" or password != "correct_password":
             msg = QMessageBox()
             msg.setWindowTitle("Error")
@@ -107,5 +119,5 @@ class LoginView(QMainWindow):
             msg.move(self.geometry().center())
 
         else:
-            # If validation is successful, close the login window (you can add your logic here)
+            # If validation is successful, close the login window
             self.close()
