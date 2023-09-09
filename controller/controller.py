@@ -32,7 +32,7 @@ class ScreenController:
     def show_create_account_view(self):
         self.create_account_view = CreateAccountView()
         self.create_account_view.show()
-        self.loading_view.close()  # Close the loading_view window.
+        self.login_view.close()  # Close the login_view window.
 
     #  # Define the back_to_login_callback method here
     # def back_to_login_callback(self):
