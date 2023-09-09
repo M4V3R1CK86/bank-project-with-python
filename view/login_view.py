@@ -15,3 +15,17 @@ class LoginView(QMainWindow):
         self.setStyleSheet('background-color:#fe2757')
         # Set the window icon
         self.setWindowIcon(QIcon('resources/img/icon/aviation.png'))
+
+        # Calculate the position to center the window on the screen
+        screen_geo = self.screen().availableGeometry()
+        x = (screen_geo.width() - self.width()) // 2
+        y = (screen_geo.height() - self.height()) // 2
+        self.move(x, y)
+
+        # Create a title label
+        title_label = QLabel("DarkStar Bank", self)
+        # Style the title label
+        title_label.setStyleSheet("color: #eec1c0; font-size: 50px;")
+        title_label.adjustSize()  # Adjust the label size based on its content
+        title_label.move((self.width() - title_label.width()) //
+                         2, 250)  # Center the label horizontally
