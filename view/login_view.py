@@ -59,6 +59,8 @@ class LoginView(QMainWindow):
             "background-color: #eec1c0; color: #de9597; border-radius: 10px;")  # Style the button
         login_button.setCursor(QCursor(
             Qt.CursorShape.PointingHandCursor))  # Set cursor shape
+        # Connect a click event to the validate_login method
+        login_button.clicked.connect(self.validate_login)
 
         # Create a "Create Account" button
         create_account_button = QPushButton("Create Account", self)
@@ -68,3 +70,42 @@ class LoginView(QMainWindow):
             "background: none; border: none; color: #de9597;")  # Style the button
         create_account_button.setCursor(QCursor(
             Qt.CursorShape.PointingHandCursor))  # Set cursor shape
+
+    def validate_login(self):
+        # Get the username and password from input fields
+        username = self.username_input.text()
+        password = self.password_input.text()
+
+        # Check if username or password are empty
+        if not username or not password:
+            # Create a QMessageBox for displaying an error message
+            msg = QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setText("Please fill in all fields.")
+            # Set the icon to a critical error
+            msg.setIcon(QMessageBox.Icon.Critical)
+            msg.exec()  # Display the message box
+            # Center the message box on the window
+            msg.move(self.geometry().center())
+
+        # Check if the password length is less than 6 characters
+        elif len(password) < 6:
+            msg = QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setText("Password must be at least 6 characters long.")
+            msg.setIcon(QMessageBox.Icon.Critical)
+            msg.exec()
+            msg.move(self.geometry().center())
+
+        # Check if username and password are correct (you can replace these with your own logic)
+        elif username != "correct_user" or password != "correct_password":
+            msg = QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setText("Incorrect username or password.")
+            msg.setIcon(QMessageBox.Icon.Critical)
+            msg.exec()
+            msg.move(self.geometry().center())
+
+        else:
+            # If validation is successful, close the login window (you can add your logic here)
+            self.close()
