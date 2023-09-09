@@ -50,3 +50,21 @@ class LoginView(QMainWindow):
             (self.width() - username_input_width) // 2, 360, username_input_width, 30)  # Set geometry and position
         self.password_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")  # Style the input field
+
+        # Create a "Login" button
+        login_button = QPushButton("Login", self)
+        login_button.setGeometry(
+            (self.width() - 100) // 2, 400, 100, 30)  # Set geometry and position
+        login_button.setStyleSheet(
+            "background-color: #eec1c0; color: #de9597; border-radius: 10px;")  # Style the button
+        login_button.setCursor(QCursor(
+            Qt.CursorShape.PointingHandCursor))  # Set cursor shape
+
+        # Create a "Create Account" button
+        create_account_button = QPushButton("Create Account", self)
+        create_account_button.setGeometry(
+            (self.width() - 100) // 2, 440, 100, 30)  # Set geometry and position
+        create_account_button.setStyleSheet(
+            "background: none; border: none; color: #de9597;")  # Style the button
+        create_account_button.setCursor(QCursor(
+            Qt.CursorShape.PointingHandCursor))  # Set cursor shape
