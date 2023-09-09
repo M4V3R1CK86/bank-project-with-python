@@ -1,5 +1,5 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor, QCursor, QIcon, QPalette
+from PyQt6.QtGui import QColor, QCursor, QIcon, QKeySequence, QPalette, QPixmap
 from PyQt6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
                              QPushButton, QVBoxLayout, QWidget)
 
@@ -75,20 +75,26 @@ class CreateAccountView(QMainWindow):
         create_account_button.setCursor(QCursor(
             Qt.CursorShape.PointingHandCursor))  # Set cursor shape
 
-        # Connect a click event to the validate_login method
-        # login_button.clicked.connect(self.validate_login)
+        # Create a QPushButton with an icon (image) to  "Back to Login"
+        back_button = QPushButton(self)
+        # Define the position and size of the button
+        back_button.setGeometry(20, 20, 40, 40)
+        arrow_icon = QIcon(QPixmap('resources/img/icon/left-arrow.png'))
+        back_button.setIcon(arrow_icon)
+        back_button.setIconSize(back_button.size())
 
-        # back_to_login_button.clicked.connect(self.back_to_login_clicked)
+        # Make the button flat (remove button styling)
+        back_button.setFlat(True)
+        back_button.setStyleSheet("QPushButton:pressed { border: none; }")
+        # back_button.setStyleSheet("QPushButton:pressed { background-color: #DE959714; }")
 
-        # back_to_login_button = QPushButton("Back", self)
-        # back_to_login_button.setGeometry(
-        #     (self.width() - 200) // 2, 440, 50, 30)
-        # back_to_login_button.setStyleSheet(
-        #     "background-color: #eec1c0; color: #de9597; border-radius: 10px;")
+        back_button.setCursor(
+            QCursor(Qt.CursorShape.PointingHandCursor))  # Set cursor shape
 
-    # def login_view(self):
-    #     self.lv = LoginView()
-    #     self.setCentralWidget(self.lv)
+        # Connect the back_button click event to a method (e.g., go_back_to_login)
+        back_button.clicked.connect(self.go_back_to_login)
 
-    # def back_to_login_clicked(self):
-    #     self.back_to_login_callback()
+    # Define a method to handle the back button click event
+    def go_back_to_login(self):
+        # Implement the logic to go back to the login view here
+        pass
