@@ -1,7 +1,9 @@
+import re  # Módulo para validação de e-mail
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QCursor, QIcon, QKeySequence, QPalette, QPixmap
 from PyQt6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
-                             QPushButton, QVBoxLayout, QWidget)
+                             QMessageBox, QPushButton, QWidget)
 
 
 class CreateAccountView(QMainWindow):
@@ -98,18 +100,53 @@ class CreateAccountView(QMainWindow):
         back_button.clicked.connect(self.go_back_to_login)
 
     def create_account(self):
-        print('clicked create account!')
-        print('first_name_input: ', self.first_name_input.text())
-        print('last_name_input: ', self.last_name_input.text())
-        print('email_input: ', self.email_input.text())
-        print('password_input: ', self.password_input.text())
+
+        first_name = self.first_name_input.text().strip()
+        last_name = self.last_name_input.text().strip()
+        email = self.email_input.text().strip()
+        password = self.password_input.text()
+
+        # validations
+        if not first_name or not last_name or not email or not password:
+            self.show_error_message("Please fill in all fields.")
+        elif len(password) < 6:
+            self.show_error_message(
+                "Password must be at least 6 characters long.")
+        elif not self.is_valid_email(email):
+            self.show_error_message("Invalid email format.")
+        else:
+            # Clear the input fields
+            self.first_name_input.setText("")
+            self.last_name_input.setText("")
+            self.email_input.setText("")
+            self.password_input.setText("")
+
+            print('Account created successfully!')
+            print('First Name:', first_name)
+            print('Last Name:', last_name)
+            print('Email:', email)
+            print('Password:', password)
+
+    def is_valid_email(self, email):
+        # Use a regular expression to validate the email format
+        # This regular expression checks a simple email format
+        email_pattern = r'^\S+@\S+\.\S+$'
+        return re.match(email_pattern, email) is not None
+
+    def show_error_message(self, message):
+        msg = QMessageBox()
+        msg.setWindowTitle("Error")
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Icon.Critical)
+        msg.exec()
+        msg.move(self.geometry().center())
 
     def set_controller(self, controller):
         self.controller = controller
 
     # Define a method to handle the back button click event
     def go_back_to_login(self):
-        self.close()  # Fecha a janela de criação de conta
+        self.close()  # close create_account window
         if self.controller:
-            # Chama o método no controlador para mostrar a tela de login
+            # Call method on controller to show login screen
             self.controller.show_login_view()
