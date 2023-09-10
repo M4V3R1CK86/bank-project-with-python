@@ -33,37 +33,37 @@ class CreateAccountView(QMainWindow):
         title_label.adjustSize()
         title_label.move((self.width() - title_label.width()) // 2, 250)
 
-        first_name_input = QLineEdit(self)
-        first_name_input.setPlaceholderText("First Name")
+        self.first_name_input = QLineEdit(self)
+        self.first_name_input.setPlaceholderText("First Name")
         first_name_input_width = 200
-        first_name_input.setGeometry(
+        self.first_name_input.setGeometry(
             (self.width() - first_name_input_width) // 2, 320, first_name_input_width, 30)
-        first_name_input.setStyleSheet(
+        self.first_name_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
-        last_name_input = QLineEdit(self)
-        last_name_input.setPlaceholderText("Last Name")
+        self.last_name_input = QLineEdit(self)
+        self.last_name_input.setPlaceholderText("Last Name")
         last_name_input_width = 200
-        last_name_input.setGeometry(
+        self.last_name_input.setGeometry(
             (self.width() - last_name_input_width) // 2, 360, last_name_input_width, 30)
-        last_name_input.setStyleSheet(
+        self.last_name_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
-        email_input = QLineEdit(self)
-        email_input.setPlaceholderText("E-mail")
+        self.email_input = QLineEdit(self)
+        self.email_input.setPlaceholderText("E-mail")
         email_input_width = 200
-        email_input.setGeometry(
+        self.email_input.setGeometry(
             (self.width() - email_input_width) // 2, 400, email_input_width, 30)
-        email_input.setStyleSheet(
+        self.email_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
-        password_input = QLineEdit(self)
-        password_input.setPlaceholderText("Password")
+        self.password_input = QLineEdit(self)
+        self.password_input.setPlaceholderText("Password")
         password_input_width = 200
-        password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        password_input.setGeometry(
+        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password_input.setGeometry(
             (self.width() - password_input_width) // 2, 440, password_input_width, 30)
-        password_input.setStyleSheet(
+        self.password_input.setStyleSheet(
             "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;")
 
         # Create a "Create Account" button
@@ -74,11 +74,14 @@ class CreateAccountView(QMainWindow):
             "background-color: #eec1c0; color: #de9597; border-radius: 10px;")  # Style the button
         create_account_button.setCursor(QCursor(
             Qt.CursorShape.PointingHandCursor))  # Set cursor shape
+        # Connect the back_button click event to a method
+        create_account_button.clicked.connect(self.create_account)
 
         # Create a QPushButton with an icon (image) to  "Back to Login"
         back_button = QPushButton(self)
         # Define the position and size of the button
         back_button.setGeometry(20, 20, 40, 40)
+        # path
         arrow_icon = QIcon(QPixmap('resources/img/icon/left-arrow.png'))
         back_button.setIcon(arrow_icon)
         back_button.setIconSize(back_button.size())
@@ -91,8 +94,15 @@ class CreateAccountView(QMainWindow):
         back_button.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))  # Set cursor shape
 
-        # Connect the back_button click event to a method (e.g., go_back_to_login)
+        # Connect the back_button click event to a method
         back_button.clicked.connect(self.go_back_to_login)
+
+    def create_account(self):
+        print('clicked create account!')
+        print('first_name_input: ', self.first_name_input.text())
+        print('last_name_input: ', self.last_name_input.text())
+        print('email_input: ', self.email_input.text())
+        print('password_input: ', self.password_input.text())
 
     def set_controller(self, controller):
         self.controller = controller

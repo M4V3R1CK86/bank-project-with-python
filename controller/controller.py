@@ -20,7 +20,7 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(1000, self.show_login_view)
+        QTimer().singleShot(5000, self.show_login_view)
 
     def show_login_view(self):
 
@@ -34,8 +34,3 @@ class ScreenController:
         self.create_account_view.set_controller(self)
         self.create_account_view.show()
         self.login_view.close()  # Close the login_view window.
-
-    #  # Define the back_to_login_callback method here
-    # def back_to_login_callback(self):
-    #     # Implement the logic to go back to the login view
-    #     pass
