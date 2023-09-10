@@ -1,5 +1,6 @@
 arrow==1.2.3
 darkdetect==0.7.1
+greenlet==2.0.2
 psycopg2==2.9.7
 PyQt6==6.5.2
 PyQt6-Qt6==6.5.2
@@ -8,3 +9,5 @@ pyqtdarktheme==2.1.0
 python-dateutil==2.8.2
 python-time==0.3.0
 six==1.16.0
+SQLAlchemy==2.0.20
+typing_extensions==4.7.1

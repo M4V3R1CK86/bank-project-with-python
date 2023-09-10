@@ -106,30 +106,49 @@ class CreateAccountView(QMainWindow):
         email = self.email_input.text().strip()
         password = self.password_input.text()
 
-        # validations
-        if not first_name or not last_name or not email or not password:
-            self.show_error_message("Please fill in all fields.")
+        # Adicione instruções de impressão para verificar os valores
+        print(f"First Name: {first_name}")
+        print(f"Last Name: {last_name}")
+        print(f"Email: {email}")
+        print(f"Password: {password}")
+
+        # Perform data validation
+        if not self.is_valid_input(first_name, last_name, email, password):
+            return  # Exit if validation fails
+
+        # Call the create_account method in the controller, passing the data
+        if self.controller:
+            self.controller.create_account(
+                first_name, last_name, email, password)
+        # Clear the input fields
+        self.first_name_input.setText("")
+        self.last_name_input.setText("")
+        self.email_input.setText("")
+        self.password_input.setText("")
+
+    def is_valid_input(self, first_name, last_name, email, password):
+        # Perform data validation here and display error messages as needed
+        if not first_name:
+            self.show_error_message("Please enter your First Name.")
+            return False
+        elif not last_name:
+            self.show_error_message("Please enter your Last Name.")
+            return False
+        elif not email:
+            self.show_error_message("Please enter your Email.")
+            return False
+        elif not self.is_valid_email(email):
+            self.show_error_message("Invalid email format.")
+            return False
         elif len(password) < 6:
             self.show_error_message(
                 "Password must be at least 6 characters long.")
-        elif not self.is_valid_email(email):
-            self.show_error_message("Invalid email format.")
-        else:
-            # Clear the input fields
-            self.first_name_input.setText("")
-            self.last_name_input.setText("")
-            self.email_input.setText("")
-            self.password_input.setText("")
+            return False
 
-            print('Account created successfully!')
-            print('First Name:', first_name)
-            print('Last Name:', last_name)
-            print('Email:', email)
-            print('Password:', password)
+        return True
 
     def is_valid_email(self, email):
         # Use a regular expression to validate the email format
-        # This regular expression checks a simple email format
         email_pattern = r'^\S+@\S+\.\S+$'
         return re.match(email_pattern, email) is not None
 
@@ -139,7 +158,6 @@ class CreateAccountView(QMainWindow):
         msg.setText(message)
         msg.setIcon(QMessageBox.Icon.Critical)
         msg.exec()
-        msg.move(self.geometry().center())
 
     def set_controller(self, controller):
         self.controller = controller
