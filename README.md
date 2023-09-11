@@ -1,4 +1,6 @@
-# Project bank with Python
+<h1> Project bank with Python </h1>
+
+> Status: Developing ⚠️
 
 Project of a banking transaction system with Python using PyQt6 graphical interface, initially with version 5,
 applying the RAD (Rapid Application Development) model.
@@ -19,5 +21,30 @@ The creation of client accounts is being stored in a postgres database on AWS
 
 ### Some fields in my controller is:
 + controller
+
+## Technologies Used: 
+<table>
+  <tr>
+    <td>Python</td>
+    <td>PyQt</td>
+    <td>psycopg</td>
+    <td>SQLAlchemy</td>
+    <td>postgres</td>
+    <td>Dbeaver</td>
+    <td>AWS</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>versao 6</td>
+    <td>2</td>
+    <td>2</td>
+    <td>15</td>
+    <td>23</td>
+    <td>2023</td>
+  </tr>
+</table>
+
+
+### How to run de application
 
 ## Developer by M4v3r1ck86
