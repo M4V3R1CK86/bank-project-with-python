@@ -1,5 +1,7 @@
 <h1> Project bank with Python </h1>
 
+![darkstarbank](https://github.com/M4v3r1ck86/bank-project-with-python/assets/25252471/14ac40d5-9cbe-492d-a8e8-767ce34a4e06)
+
 > Status: Developing ⚠️
 
 Project of a banking transaction system with Python using PyQt6 graphical interface, initially with version 5,
