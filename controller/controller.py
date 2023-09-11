@@ -1,4 +1,5 @@
 from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QMessageBox
 
 from model.account_model import AccountModel
 from model.database_config_model import DatabaseConfigModel
@@ -54,12 +55,25 @@ class ScreenController:
 
         # Create an AccountModel instance with the provided data
         account_model = AccountModel(first_name, last_name, email, password)
-        print('TESTEe', account_model)
 
         # Attempt to save the account data to the database
         if self.database_manager.save_account(account_model):
             print('Account created and saved successfully!')
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Information)
+            msg.setText("Account created successfully!!")
+            msg.setWindowTitle("success!")
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+            QTimer.singleShot(1000, self.close_create_account_and_show_login)
 
         else:
             # Handle the case where saving to the database failed
             print('Failed to create and save the account.')
+
+    def close_create_account_and_show_login(self):
+        # Fecha a janela de create_account
+        self.create_account_view.close()
+
+        # Mostra a tela de login
+        self.show_login_view()
