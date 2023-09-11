@@ -1,4 +1,4 @@
-<h1> Project bank with Python </h1>
+<h1> Bank Project with Python and GUI </h1>
 
 ![darkstarbank](https://github.com/M4v3r1ck86/bank-project-with-python/assets/25252471/14ac40d5-9cbe-492d-a8e8-767ce34a4e06)
 
