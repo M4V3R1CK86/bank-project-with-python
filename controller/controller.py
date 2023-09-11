@@ -5,6 +5,7 @@ from model.account_model import AccountModel
 from model.database_config_model import DatabaseConfigModel
 from model.database_manager import DatabaseManager
 from view.creat_account_view import CreateAccountView
+from view.home_view import HomeView
 from view.loading_view import LoadingView
 from view.login_view import LoginView
 
@@ -41,7 +42,7 @@ class ScreenController:
     def show_login_view(self):
 
         self.login_view = LoginView()
-        self.login_view.controller = self  # Pass the controller instance
+        # self.login_view.controller = self  # Pass the controller instance
         self.login_view.show()
         self.loading_view.close()  # Close the loading_view window.
 
@@ -77,3 +78,9 @@ class ScreenController:
 
         # Mostra a tela de login
         self.show_login_view()
+
+    def show_home_view(self):
+
+        self.home_view = HomeView()
+        self.home_view.show()
+        # self.loading_view.close()  # Close the loading_view window.

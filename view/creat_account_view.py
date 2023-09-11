@@ -2,8 +2,7 @@ import re  # Módulo para validação de e-mail
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QCursor, QIcon, QPixmap
-from PyQt6.QtWidgets import (QApplication, QLabel, QLineEdit, QMessageBox,
-                             QPushButton)
+from PyQt6.QtWidgets import QLabel, QLineEdit, QMessageBox, QPushButton
 
 from view.base_view import BaseView
 
