@@ -36,7 +36,7 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(10000, self.show_login_view)
+        QTimer().singleShot(1000, self.show_login_view)
 
     def show_login_view(self):
 
