@@ -36,7 +36,7 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(1000, self.show_login_view)
+        QTimer().singleShot(10000, self.show_login_view)
 
     def show_login_view(self):
 
@@ -65,7 +65,7 @@ class ScreenController:
             msg.setWindowTitle("success!")
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()
-            QTimer.singleShot(1000, self.close_create_account_and_show_login)
+            QTimer.singleShot(200, self.close_create_account_and_show_login)
 
         else:
             # Handle the case where saving to the database failed
