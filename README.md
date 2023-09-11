@@ -20,4 +20,4 @@ The creation of client accounts is being stored in a postgres database on AWS
 ### Some fields in my controller is:
 + controller
 
-## Developer by Jonathan Grismond aka M4v3r1ck86
+## Developer by M4v3r1ck86
