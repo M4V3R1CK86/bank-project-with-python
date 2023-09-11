@@ -1,9 +1,10 @@
 # Project bank with Python
 
-    Project of a banking transaction system with Python using PyQt6 graphical interface, initially with version 5,
-    applying the RAD (Rapid Application Development) model.
-    I used OO and MVC to build robustly and scale the system.
-    The creation of client accounts is being stored in a postgres database on AWS
+Project of a banking transaction system with Python using PyQt6 graphical interface, initially with version 5,
+applying the RAD (Rapid Application Development) model.
+I used OO and MVC to build robustly and scale the system.
+The creation of client accounts is being stored in a postgres database on AWS
+
 ### Some fields in my model is:
 + account_model
 + database_config_model
