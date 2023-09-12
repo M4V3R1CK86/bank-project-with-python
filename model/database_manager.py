@@ -46,3 +46,30 @@ class DatabaseManager:
         except Exception as e:
             print(f"Error saving account data: {str(e)}")
             return False  # Error occurred while saving data
+
+    def are_credentials_valid(self, email, password):
+        db_params = self.db_config.get_db_config()
+        # self.db_config.get_db_config()
+        try:
+            # Crie uma conexão com o banco de dados
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # Defina a consulta SQL para verificar as credenciais
+            sql_query = '''
+                SELECT * FROM darkstarbank.accounts
+                WHERE email = %s AND password = %s
+            '''
+
+            # Execute a consulta SQL com os parâmetros (email, password)
+            cursor.execute(sql_query, (email, password))
+            account = cursor.fetchone()  # Tente buscar uma linha
+
+            # Feche o cursor e a conexão
+            cursor.close()
+            connection.close()
+
+            return account is not None  # True se as credenciais são válidas
+        except Exception as e:
+            print(f"Erro ao verificar as credenciais: {str(e)}")
+            return False
