@@ -37,7 +37,7 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(10000, self.show_login_view)
+        QTimer().singleShot(2000, self.show_login_view)
 
     def show_login_view(self):
 
@@ -59,7 +59,6 @@ class ScreenController:
 
         # Attempt to save the account data to the database
         if self.database_manager.save_account(account_model):
-            print('Account created and saved successfully!')
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Icon.Information)
             msg.setText("Account created successfully!!")
@@ -72,6 +71,16 @@ class ScreenController:
             # Handle the case where saving to the database failed
             print('Failed to create and save the account.')
 
+    def logging_in(self, email, password):
+
+        # Chame are_credentials_valid com db_params como argumento
+        if self.database_manager.are_credentials_valid(email, password):
+            # Credenciais válidas, exiba a HomeView
+            self.show_home_view()
+        else:
+            # Credenciais inválidas, exiba uma mensagem de erro
+            self.login_view.show_error_message("Invalid email or password")
+
     def close_create_account_and_show_login(self):
         # Fecha a janela de create_account
         self.create_account_view.close()
@@ -83,7 +92,4 @@ class ScreenController:
 
         self.home_view = HomeView()
         self.home_view.show()
-        # self.loading_view.close()  # Close the loading_view window.
-
-    def show_custom_window(self):
-        self.custom_window.show()  # Mostre a janela personalizada
+        self.login_view.close()
