@@ -10,7 +10,7 @@ class LoadingView(BaseView):
 
         # Create a QLabel for the title "DarkStar Bank" and set its style.
         title_label = QLabel("DarkStar Bank", self)
-        title_label.setStyleSheet("color: #eec1c0; font-size: 50px;")
+        title_label.setStyleSheet("color: #c9a9a8; font-size: 50px;")
 
         # Adjust the size of the title_label to fit the text.
         title_label.adjustSize()
@@ -21,7 +21,7 @@ class LoadingView(BaseView):
         # Set the position of the title label to center it both horizontally and vertically.
         title_label.move((self.width() - title_label.width()) // 2, label_y)
         # Create a QMovie for the loading animation.
-        loading_gif = QMovie('resources/img/gif/spinner.gif')
+        loading_gif = QMovie('resources/img/gif/Spinner-1s-48px.gif')
 
         # Create a QLabel to display the loading animation.
         loading_label = QLabel(self)

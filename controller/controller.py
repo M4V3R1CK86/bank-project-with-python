@@ -37,12 +37,12 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(1000, self.show_login_view)
+        QTimer().singleShot(10000, self.show_login_view)
 
     def show_login_view(self):
 
         self.login_view = LoginView()
-        # self.login_view.controller = self  # Pass the controller instance
+        self.login_view.controller = self  # Pass the controller instance
         self.login_view.show()
         self.loading_view.close()  # Close the loading_view window.
 
@@ -84,3 +84,6 @@ class ScreenController:
         self.home_view = HomeView()
         self.home_view.show()
         # self.loading_view.close()  # Close the loading_view window.
+
+    def show_custom_window(self):
+        self.custom_window.show()  # Mostre a janela personalizada

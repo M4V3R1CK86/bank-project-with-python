@@ -17,14 +17,14 @@ class CreateAccountView(BaseView):
         x = (width_screen - width_input) // 2
         x2 = (width_screen - width_btn) // 2
 
-        styleSheet_input = "background-color: #7ceec1c0; color: #ffede9; border-radius: 10px; padding-left: 10px;"
+        styleSheet_input = "background-color: #967978; color: #c9a9a8; border-radius: 10px; padding-left: 10px;"
         styleSheet_login_btn = "background-color: #eec1c0; color: #de9597; border-radius: 10px;"
-        styleSheet_create_account_btn = "background-color: #eec1c0; color: #de9597; border-radius: 10px;"
+        styleSheet_create_account_btn = "background-color: #967978; color: #c9a9a8; border-radius: 10px;"
 
         PointingHandCursor = QCursor(Qt.CursorShape.PointingHandCursor)
 
         title_label = QLabel("DarkStar Bank", self)
-        title_label.setStyleSheet("color: #eec1c0; font-size: 50px;")
+        title_label.setStyleSheet("color: #967978; font-size: 50px;")
         title_label.adjustSize()
         title_width = title_label.width()
         title_label.move((width_screen - title_width) // 2, 250)
