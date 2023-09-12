@@ -55,6 +55,9 @@ class LoginView(BaseView):
 
         login_btn.clicked.connect(self.logging_in)
 
+        # Set the Enter key as a shortcut for the login button
+        login_btn.setShortcut("Return")  # This sets Enter key as a shortcut
+
         # Create a Create Account button
         create_account_btn = QPushButton("Create Account", self)
         create_account_btn.setGeometry(x2, 440, width_btn, 30)
