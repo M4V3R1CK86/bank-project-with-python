@@ -77,6 +77,7 @@ class ScreenController:
         if self.database_manager.are_credentials_valid(email, password):
             # Credenciais válidas, exiba a HomeView
             self.show_home_view()
+            self.login_view.close()
         else:
             # Credenciais inválidas, exiba uma mensagem de erro
             self.login_view.show_error_message("Invalid email or password")
@@ -92,4 +93,3 @@ class ScreenController:
 
         self.home_view = HomeView()
         self.home_view.show()
-        self.login_view.close()
