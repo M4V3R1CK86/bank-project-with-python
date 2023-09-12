@@ -10,7 +10,7 @@ class BaseView(QMainWindow):
 
         self.setWindowTitle("DarkStar Bank")
         self.setFixedSize(1334, 750)
-        self.setStyleSheet('background-color:#745b5b')
+        self.setStyleSheet('background-color:#543d3c')
         self.setWindowIcon(QIcon('resources/img/icon/aviation.png'))
 
         # Calculate the position to center the window on the screen
