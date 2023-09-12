@@ -10,7 +10,7 @@ class LoadingView(BaseView):
 
         # Create a QLabel for the title "DarkStar Bank" and set its style.
         title_label = QLabel("DarkStar Bank", self)
-        title_label.setStyleSheet("color: #c9a9a8; font-size: 50px;")
+        title_label.setStyleSheet("color: #ffffe8; font-size: 50px;")
 
         # Adjust the size of the title_label to fit the text.
         title_label.adjustSize()
