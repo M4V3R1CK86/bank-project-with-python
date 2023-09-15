@@ -101,11 +101,11 @@ class HomeView(BaseView):
         label.setStyleSheet("border-radius: 40px; background-color: white; ")
 
         nome = "Jonathan Grismond"
-        # Adiciona o texto "Olá" e o nome da pessoa
-        hello = QLabel(f"Olá, {nome}", central_box)
-        hello.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        hello.setGeometry(120, 50, 220, 30)
-        hello.setStyleSheet("color: #c9a9a8; font-size: 20px;")
+        welcome_text = f"Welcome, {nome}"
+        welcome = QLabel(welcome_text, central_box)
+        welcome.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        welcome.setGeometry(120, 50, 300, 30)
+        welcome.setStyleSheet("color: #c9a9a8; font-size: 20px;")
 
         # Adicione uma linha vertical
         line = QFrame()

@@ -12,7 +12,6 @@ if __name__ == "__main__":
 
     # Call the show_loading_view() method of the controller to display the loading view.
     controller.show_loading_view()
-    # controller.show_home_view()
 
     # Start the application event loop using app.exec(). This keeps the application running until the user closes it.
     app.exec()

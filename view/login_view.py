@@ -34,12 +34,6 @@ class LoginView(BaseView):
         self.email_input.setGeometry(x, 320, width_input, 30)
         self.email_input.setStyleSheet(styleSheet_input)
 
-        # Create a username input field
-        # self.username_input = QLineEdit(self)
-        # self.username_input.setPlaceholderText("User")
-        # self.username_input.setGeometry(x, 320, width_input, 30)
-        # self.username_input.setStyleSheet(styleSheet_input)
-
         # Create a password input field
         self.password_input = QLineEdit(self)
         self.password_input.setPlaceholderText("Password")
