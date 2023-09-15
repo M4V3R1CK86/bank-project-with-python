@@ -6,7 +6,7 @@ from view.base_view import BaseView
 
 
 class HomeView(BaseView):
-    def __init__(self):
+    def __init__(self, user_id, first_name, last_name):
         super().__init__()
 
         # Crie uma QWidget principal para conter todos os elementos da tela
@@ -100,7 +100,7 @@ class HomeView(BaseView):
         label.setGeometry(20, 20, 80, 80)
         label.setStyleSheet("border-radius: 40px; background-color: white; ")
 
-        nome = "Jonathan Grismond"
+        nome = f"{first_name} {last_name}"
         welcome_text = f"Welcome, {nome}"
         welcome = QLabel(welcome_text, central_box)
         welcome.setAlignment(Qt.AlignmentFlag.AlignCenter)
