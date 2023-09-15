@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QMessageBox
 from model.account_model import AccountModel
 from model.database_config_model import DatabaseConfigModel
 from model.database_manager import DatabaseManager
+from view.base_view import BaseView
 from view.creat_account_view import CreateAccountView
 from view.home_view import HomeView
 from view.loading_view import LoadingView
@@ -37,7 +38,7 @@ class ScreenController:
         self.loading_view.show()
 
         # Create a QTimer instance and schedule a single-shot timer event to call the self.show_login_view() function after 1000 milliseconds (1 second).
-        QTimer().singleShot(2000, self.show_login_view)
+        QTimer().singleShot(5000, self.show_login_view)
 
     def show_login_view(self):
 
@@ -93,3 +94,8 @@ class ScreenController:
 
         self.home_view = HomeView()
         self.home_view.show()
+
+    def show_base_view(self):
+
+        self.base_view = BaseView()
+        self.base_view.show()
