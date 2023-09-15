@@ -1,75 +1,111 @@
-
+import bcrypt
 import psycopg2 as pg
 
 
 class DatabaseManager:
     def __init__(self, database_config_model):
-        # Configure your PostgreSQL connection parameters
         self.db_config = database_config_model
 
-    def save_account(self, account_model):
+    def save_account(self, users_model):
+        # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
-        # print('db_params: ', db_params)
         try:
-
-            # Create a database connection
+            # Establish a database connection
             connection = pg.connect(**db_params)
-
-            # print('connection: ',  connection=pg.connect(**db_params))
-
-            # Create a cursor object to execute SQL queries
             cursor = connection.cursor()
 
-            # Define the SQL INSERT query to save the account data
+            # SQL query to insert user information into the 'users' table
             sql_query = '''
-                INSERT INTO darkstarbank.accounts (first_name, last_name, email, password)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO dark_star_bank.users (first_name, last_name, email)
+                VALUES (%s, %s, %s)
+                RETURNING id
             '''
 
-            # Execute the SQL query with the data from the account model
+            # Execute the SQL query with user data and retrieve the user ID
             cursor.execute(sql_query, (
-                account_model.first_name,
-                account_model.last_name,
-                account_model.email,
-                account_model.password
+                users_model.first_name,
+                users_model.last_name,
+                users_model.email
             ))
 
-            # Commit the changes to the database
+            user_id = cursor.fetchone()[0]
             connection.commit()
-            print('commit: ', connection.commit)
 
-            # Close the cursor and connection
             cursor.close()
             connection.close()
 
-            return True  # Data saved successfully
+            # If user account is saved successfully, create authentication credentials
+            if self.create_authentication_credentials(user_id, users_model.password):
+                return True
+            else:
+                return False
+
         except Exception as e:
             print(f"Error saving account data: {str(e)}")
-            return False  # Error occurred while saving data
+            return False
 
-    def are_credentials_valid(self, email, password):
+    def create_authentication_credentials(self, user_id, password):
+        # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
-        # self.db_config.get_db_config()
         try:
-            # Crie uma conexão com o banco de dados
+            # Establish a database connection
             connection = pg.connect(**db_params)
             cursor = connection.cursor()
 
-            # Defina a consulta SQL para verificar as credenciais
+            # SQL query to insert authentication credentials (user ID and password hash)
             sql_query = '''
-                SELECT * FROM darkstarbank.accounts
-                WHERE email = %s AND password = %s
+                INSERT INTO dark_star_bank.authentication_credentials (user_id, password_hash)
+                VALUES (%s, %s)
             '''
 
-            # Execute a consulta SQL com os parâmetros (email, password)
-            cursor.execute(sql_query, (email, password))
-            account = cursor.fetchone()  # Tente buscar uma linha
+            # Execute the SQL query with user ID and password hash
+            cursor.execute(sql_query, (user_id, password))
+            connection.commit()
 
-            # Feche o cursor e a conexão
             cursor.close()
             connection.close()
 
-            return account is not None  # True se as credenciais são válidas
+            return True
+
         except Exception as e:
-            print(f"Erro ao verificar as credenciais: {str(e)}")
+            print(f"Error creating authentication credentials: {str(e)}")
             return False
+
+    def are_credentials_valid(self, email, password):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # SQL query to validate user credentials based on email
+            sql_query = '''
+                SELECT users.id, users.first_name, users.last_name, authentication_credentials.password_hash
+                FROM dark_star_bank.users
+                INNER JOIN dark_star_bank.authentication_credentials
+                ON users.id = authentication_credentials.user_id
+                WHERE users.email = %s
+            '''
+
+            # Execute the SQL query with the provided email
+            cursor.execute(sql_query, (email, ))
+            user_data = cursor.fetchone()
+
+            if user_data:
+                user_id, first_name, last_name, stored_password_hash = user_data
+                cursor.close()
+                connection.close()
+                # Verifique se a senha fornecida pelo usuário corresponde ao hash armazenado
+                if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash.encode('utf-8')):
+                    return user_id, first_name, last_name
+                else:
+                    return None
+            else:
+                cursor.close()
+                connection.close()
+                return None
+
+        except Exception as e:
+            print(f"Error validating credentials: {str(e)}")
+            return None
