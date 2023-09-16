@@ -90,7 +90,7 @@ class ScreenController:
             # Display a success message if the account is created and saved.
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Icon.Information)
-            msg.setText("Account created successfully!!")
+            msg.setText("User created successfully!!")
             msg.setWindowTitle("Success!")
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()
@@ -102,7 +102,7 @@ class ScreenController:
                 bank_msg = QMessageBox()
                 bank_msg.setIcon(QMessageBox.Icon.Information)
                 bank_msg.setText(
-                    "Bank account created and associated successfully!!")
+                    "Bank account created and associated to User successfully!!")
                 bank_msg.setWindowTitle("Success!")
                 bank_msg.setStandardButtons(QMessageBox.StandardButton.Ok)
                 bank_msg.exec()
