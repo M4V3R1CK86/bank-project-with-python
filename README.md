@@ -1,6 +1,6 @@
 <h1> Bank Project with Python and GUI </h1>
 
-![darkstarbank](https://github.com/M4v3r1ck86/bank-project-with-python/assets/25252471/78eade45-10e9-4b94-a235-2a3b3e55eed4)
+![darkstarbank-marrom](https://github.com/M4v3r1ck86/bank-project-with-python/assets/25252471/81db4d04-79e7-49f0-8cd9-0103d36a74f0)
 
 > Status: Developing ⚠️
 
