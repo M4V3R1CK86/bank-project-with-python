@@ -83,8 +83,10 @@ class ScreenController:
         # Set the hashed password for the user.
         users_model.set_password(password)
 
-        # Attempt to save the user account in the database.
-        if self.database_manager.save_account(users_model):
+        # Attempt to save the user account in the database and get the id of the user
+        user_id = self.database_manager.save_account(users_model)
+
+        if user_id is not None:
             # Display a success message if the account is created and saved.
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Icon.Information)
@@ -92,6 +94,21 @@ class ScreenController:
             msg.setWindowTitle("Success!")
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()
+
+            # Call the create_account_bank method to associate the bank account with the user
+            # Pass user_id as an argument to the method
+            if self.database_manager.create_account_bank(user_id):
+                # Display a success message if the bank account is created and associated.
+                bank_msg = QMessageBox()
+                bank_msg.setIcon(QMessageBox.Icon.Information)
+                bank_msg.setText(
+                    "Bank account created and associated successfully!!")
+                bank_msg.setWindowTitle("Success!")
+                bank_msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+                bank_msg.exec()
+            else:
+                # Handle errors if creating the bank account fails.
+                print('Failed to create and associate the bank account.')
 
             # Close the create_account_view and show the login view after a delay.
             QTimer.singleShot(200, self.close_create_account_and_show_login)

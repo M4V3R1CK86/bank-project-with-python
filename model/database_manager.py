@@ -36,7 +36,7 @@ class DatabaseManager:
 
             # If user account is saved successfully, create authentication credentials
             if self.create_authentication_credentials(user_id, users_model.password):
-                return True
+                return user_id
             else:
                 return False
 
@@ -109,3 +109,69 @@ class DatabaseManager:
         except Exception as e:
             print(f"Error validating credentials: {str(e)}")
             return None
+
+    def create_account_bank(self, user_id):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # Set the default values for the new account
+            bank_code = 77  # Suponha que 1 é o código do banco padrão
+            account_type = 'business_account'
+            balance = 10000.00
+            overdraft_limit = 1000.00
+
+            # Determine the next account number with a checksum (you may need a more complex logic)
+            last_account_number = self.get_last_account_number(cursor)
+            next_account_number = last_account_number + 1
+            # Preencher com zeros à esquerda
+            account_number = f"{next_account_number:09d}-2"
+
+            # Set a default branch number
+            branch_number = "0001"
+
+            # SQL query to insert account bank information
+            sql_query = '''
+                INSERT INTO dark_star_bank.account (user_id, bank_code, account_type, balance, overdraft_limit, account_number, branch_number)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            '''
+
+            # Execute the SQL query with account bank data
+            cursor.execute(sql_query, (user_id, bank_code, account_type,
+                           balance, overdraft_limit, account_number, branch_number))
+            connection.commit()
+
+            cursor.close()
+            connection.close()
+
+            return True
+
+        except Exception as e:
+            print(f"Error creating account bank: {str(e)}")
+            return False
+
+    def get_last_account_number(self, cursor):
+        try:
+            # Query the database to get the highest account number
+            sql_query = '''
+                SELECT MAX(account_number)
+                FROM dark_star_bank.account
+            '''
+            cursor.execute(sql_query)
+            result = cursor.fetchone()[0]
+
+            if result is not None:
+                # Extract the numeric part of the last account number
+                last_account_number = int(result.split('-')[0])
+            else:
+                # If no account exists, start with 1
+                last_account_number = 0
+
+            return last_account_number
+
+        except Exception as e:
+            print(f"Error getting last account number: {str(e)}")
+            return 0
