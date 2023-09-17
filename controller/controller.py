@@ -77,6 +77,17 @@ class ScreenController:
     def create_account(self, first_name, last_name, email, password):
         # Method to create a new user account.
 
+        # Check if the provided email already exists in the database
+        if self.database_manager.is_email_registered(email):
+            # Display an error message if the email is already registered.
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Critical)
+            msg.setText("Email is already registered.")
+            msg.setWindowTitle("Error")
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+            return
+
         # Create an instance of UsersModel with user information.
         users_model = UsersModel(first_name, last_name, email)
 
