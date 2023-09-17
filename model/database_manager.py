@@ -175,3 +175,29 @@ class DatabaseManager:
         except Exception as e:
             print(f"Error getting last account number: {str(e)}")
             return 0
+
+    def is_email_registered(self, email):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # SQL query to check if the email is registered
+            sql_query = '''
+                SELECT COUNT(*) FROM dark_star_bank.users WHERE email = %s
+            '''
+
+            # Execute the SQL query with the provided email
+            cursor.execute(sql_query, (email, ))
+            count = cursor.fetchone()[0]
+
+            cursor.close()
+            connection.close()
+
+            return count > 0
+
+        except Exception as e:
+            print(f"Error checking if email is registered: {str(e)}")
+            return False
