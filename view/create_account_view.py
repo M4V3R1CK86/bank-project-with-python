@@ -59,6 +59,10 @@ class CreateAccountView(BaseView):
         # Connect the back_button click event to a method
         create_account_button.clicked.connect(self.create_account)
 
+        # Set the Enter key as a shortcut for the create_account_button
+        # This sets Enter key as a shortcut
+        create_account_button.setShortcut("Return")
+
         # Create a QPushButton with an icon (image) to  "Back to Login"
         back_button = QPushButton(self)
         back_button.setGeometry(20, 20, 40, 40)
