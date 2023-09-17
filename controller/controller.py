@@ -162,6 +162,8 @@ class ScreenController:
         # Create an instance of HomeView with user information.
         self.home_view = HomeView(user_id, first_name, last_name)
 
+        self.home_view.set_controller(self)
+
         # Show the home view.
         self.home_view.show()
 

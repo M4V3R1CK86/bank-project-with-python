@@ -62,12 +62,13 @@ class HomeView(BaseView):
         home_btn.setCursor(PointingHandCursor)
 
         # home_btn
-        home_btn = QPushButton("Logout", left_box)
-        icon = QIcon("resources/img/icon/icons8-logout-30.png")
-        home_btn.setGeometry(25, 600, 150, 30)
-        home_btn.setIcon(icon)
-        home_btn.setStyleSheet(style_home_btn)
-        home_btn.setCursor(PointingHandCursor)
+        logout_btn = QPushButton("Logout", left_box)
+        logou_icon = QIcon("resources/img/icon/icons8-logout-30.png")
+        logout_btn.setGeometry(25, 600, 150, 30)
+        logout_btn.setIcon(logou_icon)
+        logout_btn.setStyleSheet(style_home_btn)
+        logout_btn.setCursor(PointingHandCursor)
+        logout_btn.clicked.connect(self.go_back_to_login)
 
         layout.addWidget(left_box)
 
@@ -124,3 +125,11 @@ class HomeView(BaseView):
 
         layout.addWidget(right_box)
         ###################################################################################
+
+    def set_controller(self, controller):
+        self.controller = controller
+
+    def go_back_to_login(self):
+        self.close()
+        if self.controller:
+            self.controller.show_login_view()
