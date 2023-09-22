@@ -44,6 +44,7 @@ class DatabaseManager:
             print(f"Error saving account data: {str(e)}")
             return False
 
+    # save_account - database_manager ^^^^^^^^
     def create_authentication_credentials(self, user_id, password):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
@@ -71,6 +72,7 @@ class DatabaseManager:
             print(f"Error creating authentication credentials: {str(e)}")
             return False
 
+    # logging_in - controller
     def are_credentials_valid(self, email, password):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
@@ -110,6 +112,34 @@ class DatabaseManager:
             print(f"Error validating credentials: {str(e)}")
             return None
 
+    # create_account - controller
+    def is_email_registered(self, email):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # SQL query to check if the email is registered
+            sql_query = '''
+                SELECT COUNT(*) FROM dark_star_bank.users WHERE email = %s
+            '''
+
+            # Execute the SQL query with the provided email
+            cursor.execute(sql_query, (email, ))
+            count = cursor.fetchone()[0]
+
+            cursor.close()
+            connection.close()
+
+            return count > 0
+
+        except Exception as e:
+            print(f"Error checking if email is registered: {str(e)}")
+            return False
+
+    # create_account - controller
     def create_account_bank(self, user_id):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
@@ -153,6 +183,7 @@ class DatabaseManager:
             print(f"Error creating account bank: {str(e)}")
             return False
 
+    # create_account_bank - database_manager ^^^^^^^^
     def get_last_account_number(self, cursor):
         try:
             # Query the database to get the highest account number
@@ -176,7 +207,7 @@ class DatabaseManager:
             print(f"Error getting last account number: {str(e)}")
             return 0
 
-    def is_email_registered(self, email):
+    def get_user_account_data(self, user_id):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
         try:
@@ -184,20 +215,29 @@ class DatabaseManager:
             connection = pg.connect(**db_params)
             cursor = connection.cursor()
 
-            # SQL query to check if the email is registered
+            # SQL query to fetch account data for the user
             sql_query = '''
-                SELECT COUNT(*) FROM dark_star_bank.users WHERE email = %s
+                SELECT * FROM dark_star_bank.account
+                WHERE user_id = %s
             '''
 
-            # Execute the SQL query with the provided email
-            cursor.execute(sql_query, (email, ))
-            count = cursor.fetchone()[0]
+            # Execute the SQL query with the user_id
+            cursor.execute(sql_query, (user_id, ))
+            account_data = cursor.fetchone()
 
             cursor.close()
             connection.close()
 
-            return count > 0
+            # if account_data:
+            #     # Converte a tupla em um dicionário com nomes de coluna como chaves
+            #     column_names = [desc[0] for desc in cursor.description]
+            #     account_data_dict = dict(zip(column_names, account_data))
+            #     return account_data_dict
+
+            # return None
+
+            return account_data
 
         except Exception as e:
-            print(f"Error checking if email is registered: {str(e)}")
-            return False
+            print(f"Error fetching user account data: {str(e)}")
+            return None

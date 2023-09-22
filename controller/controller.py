@@ -13,6 +13,7 @@ from view.login_view import LoginView
 
 
 class ScreenController:
+
     def __init__(self, app):
         # Constructor for the ScreenController class.
         # It receives an instance of QApplication as an argument.
@@ -23,12 +24,6 @@ class ScreenController:
 
         # Create an instance of DatabaseManager to manage database operations.
         self.database_manager = DatabaseManager(self.db_config_model)
-
-        # Create an instance of CreateAccountView.
-        self.create_account_view = CreateAccountView()
-
-        # Configure the connection between the view and the controller.
-        self.create_account_view.set_controller(self)
 
     def show_loading_view(self):
         # Method to display the loading view.
@@ -51,7 +46,7 @@ class ScreenController:
         self.login_view = LoginView()
 
         # Pass the controller instance to the login view.
-        self.login_view.controller = self
+        self.login_view.set_controller(self)
 
         # Show the login view.
         self.login_view.show()
@@ -74,7 +69,19 @@ class ScreenController:
         # Close the login_view window.
         self.login_view.close()
 
+    def show_home_view(self, user_id, first_name, last_name, account_data):
+        # Method to show the home view for an authenticated user.
+
+        # Create an instance of HomeView with user information.
+        self.home_view = HomeView(user_id, first_name, last_name, account_data)
+
+        self.home_view.set_controller(self)
+
+        # Show the home view.
+        self.home_view.show()
+
     def create_account(self, first_name, last_name, email, password):
+
         # Method to create a new user account.
 
         # Check if the provided email already exists in the database
@@ -138,8 +145,11 @@ class ScreenController:
             # If valid credentials, extract user information.
             user_id, first_name, last_name = user_data
 
+            # Chame o método para obter os dados da conta
+            account_data = self.database_manager.get_user_account_data(user_id)
+
             # Show the home view for the authenticated user.
-            self.show_home_view(user_id, first_name, last_name)
+            self.show_home_view(user_id, first_name, last_name, account_data)
 
             # Close the login_view.
             self.login_view.close()
@@ -155,23 +165,3 @@ class ScreenController:
 
         # Show the login view.
         self.show_login_view()
-
-    def show_home_view(self, user_id, first_name, last_name):
-        # Method to show the home view for an authenticated user.
-
-        # Create an instance of HomeView with user information.
-        self.home_view = HomeView(user_id, first_name, last_name)
-
-        self.home_view.set_controller(self)
-
-        # Show the home view.
-        self.home_view.show()
-
-    def show_base_view(self):
-        # Method to show the base view.
-
-        # Create an instance of BaseView.
-        self.base_view = BaseView()
-
-        # Show the base view.
-        self.base_view.show()

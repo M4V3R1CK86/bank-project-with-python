@@ -6,7 +6,7 @@ from view.base_view import BaseView
 
 
 class HomeView(BaseView):
-    def __init__(self, user_id, first_name, last_name):
+    def __init__(self, user_id, first_name, last_name, account_data):
         super().__init__()
 
         # Crie uma QWidget principal para conter todos os elementos da tela
@@ -94,19 +94,28 @@ class HomeView(BaseView):
         # Adiciona uma imagem circular (substitua pelo caminho da sua imagem)
         pixmap = QPixmap("resources/img/eu.jpg")
         label = QLabel(central_box)
-        label.setPixmap(pixmap)
+        # label.setPixmap(pixmap)
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setFixedWidth(80)
-        label.setFixedHeight(80)
+        # label.setFixedWidth(80)
+        # label.setFixedHeight(80)
         label.setGeometry(20, 20, 80, 80)
-        label.setStyleSheet("border-radius: 40px; background-color: white; ")
+        label.setStyleSheet(
+            "border-radius: 40px; background-color: none; border: 3px solid #c9a9a8; ")
 
         nome = f"{first_name} {last_name}"
         welcome_text = f"Welcome, {nome}"
         welcome = QLabel(welcome_text, central_box)
-        welcome.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        welcome.setGeometry(120, 50, 300, 30)
+        welcome.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        welcome.setGeometry(110, 50, 300, 30)
         welcome.setStyleSheet("color: #c9a9a8; font-size: 20px;")
+
+        if account_data:
+            balance = account_data[4]
+            balance_text = f"Your Balance is ${balance}"
+            label_balance = QLabel(balance_text, central_box)
+            label_balance.setAlignment(Qt.AlignmentFlag.AlignLeft)
+            label_balance.setGeometry(20, 120, 320, 30)
+            label_balance.setStyleSheet("color: #c9a9a8; font-size: 20px;")
 
         # Adicione uma linha vertical
         line = QFrame()
