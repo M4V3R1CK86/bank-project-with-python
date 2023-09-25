@@ -111,11 +111,87 @@ class HomeView(BaseView):
 
         if account_data:
             balance = account_data[4]
-            balance_text = f"Your Balance is ${balance}"
+            balance_text = f"Balance ${balance}"
             label_balance = QLabel(balance_text, central_box)
             label_balance.setAlignment(Qt.AlignmentFlag.AlignLeft)
             label_balance.setGeometry(20, 120, 320, 30)
             label_balance.setStyleSheet("color: #c9a9a8; font-size: 20px;")
+
+        chart = QFrame(central_box)
+        chart.setGeometry(20, 170, 690, 220)
+        chart.setStyleSheet(
+            "border-radius: 40px; background-color: none; border: 3px solid #c9a9a8; ")
+        # transfer_btn
+        transfer_icon = QIcon("resources/img/icon/transfer.png")
+        transfer_btn = QPushButton("Transfer", central_box)
+        transfer_btn.setGeometry(21, 420, 152, 200)
+        transfer_btn.setIcon(transfer_icon)
+        transfer_btn.setStyleSheet("""
+            border-radius: 40px;
+            background-color: none;
+            border: 3px solid #c9a9a8;
+            color: #c9a9a8;
+            font-size: 14px;
+            margin-left: 0px;
+            background-color: transparent;
+            text-align: left; /* Alinha o texto e o ícone à esquerda */
+            padding-left: 40px; /* Espaçamento à esquerda para o ícone */
+        """)
+        transfer_btn.setCursor(PointingHandCursor)
+
+       # deposit_btn
+        deposit_icon = QIcon("resources/img/icon/deposit.png")
+        deposit_btn = QPushButton("Deposit", central_box)
+        deposit_btn.setGeometry(193, 420, 152, 200)
+        deposit_btn.setIcon(deposit_icon)
+        deposit_btn.setStyleSheet("""
+            border-radius: 40px;
+            background-color: none;
+            border: 3px solid #c9a9a8;
+            color: #c9a9a8;
+            font-size: 14px;
+            margin-left: 0px;
+            background-color: transparent;
+            text-align: left; /* Alinha o texto e o ícone à esquerda */
+            padding-left: 40px; /* Espaçamento à esquerda para o ícone */
+        """)
+        deposit_btn.setCursor(PointingHandCursor)
+
+        # bill_btn
+        bill_icon = QIcon("resources/img/icon/bill.png")
+        bill_btn = QPushButton("Bill Payment", central_box)
+        bill_btn.setGeometry(365, 420, 152, 200)
+        bill_btn.setIcon(bill_icon)
+        bill_btn.setStyleSheet("""
+            border-radius: 40px;
+            background-color: none;
+            border: 3px solid #c9a9a8;
+            color: #c9a9a8;
+            font-size: 14px;
+            margin-left: 0px;
+            background-color: transparent;
+            text-align: left; /* Alinha o texto e o ícone à esquerda */
+            padding-left: 40px; /* Espaçamento à esquerda para o ícone */
+        """)
+        bill_btn.setCursor(PointingHandCursor)
+
+        # loan_btn
+        loan_icon = QIcon("resources/img/icon/loan.png")
+        loan_btn = QPushButton("Loan", central_box)
+        loan_btn.setGeometry(538, 420, 152, 200)
+        loan_btn.setIcon(loan_icon)
+        loan_btn.setStyleSheet("""
+            border-radius: 40px;
+            background-color: none;
+            border: 3px solid #c9a9a8;
+            color: #c9a9a8;
+            font-size: 14px;
+            margin-left: 0px;
+            background-color: transparent;
+            text-align: left; /* Alinha o texto e o ícone à esquerda */
+            padding-left: 40px; /* Espaçamento à esquerda para o ícone */
+        """)
+        loan_btn.setCursor(PointingHandCursor)
 
         # Adicione uma linha vertical
         line = QFrame()
@@ -133,6 +209,11 @@ class HomeView(BaseView):
         right_box.setStyleSheet(styleSheet_box)
 
         layout.addWidget(right_box)
+
+        credit_card = QFrame(right_box)
+        credit_card.setGeometry(20, 40, 350, 218)
+        credit_card.setStyleSheet(
+            "border-radius: 40px; background-color: none; border: 3px solid #c9a9a8; ")
         ###################################################################################
 
     def set_controller(self, controller):
