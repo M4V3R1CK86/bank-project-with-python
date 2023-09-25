@@ -6,6 +6,34 @@ class DatabaseManager:
     def __init__(self, database_config_model):
         self.db_config = database_config_model
 
+    # create_account - controller
+    def is_email_registered(self, email):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # SQL query to check if the email is registered
+            sql_query = '''
+                SELECT COUNT(*) FROM dark_star_bank.users WHERE email = %s
+            '''
+
+            # Execute the SQL query with the provided email
+            cursor.execute(sql_query, (email, ))
+            count = cursor.fetchone()[0]
+
+            cursor.close()
+            connection.close()
+
+            return count > 0
+
+        except Exception as e:
+            print(f"Error checking if email is registered: {str(e)}")
+            return False
+
+    # create_account - controller
     def save_account(self, users_model):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
@@ -113,33 +141,7 @@ class DatabaseManager:
             return None
 
     # create_account - controller
-    def is_email_registered(self, email):
-        # Get the database configuration parameters
-        db_params = self.db_config.get_db_config()
-        try:
-            # Establish a database connection
-            connection = pg.connect(**db_params)
-            cursor = connection.cursor()
 
-            # SQL query to check if the email is registered
-            sql_query = '''
-                SELECT COUNT(*) FROM dark_star_bank.users WHERE email = %s
-            '''
-
-            # Execute the SQL query with the provided email
-            cursor.execute(sql_query, (email, ))
-            count = cursor.fetchone()[0]
-
-            cursor.close()
-            connection.close()
-
-            return count > 0
-
-        except Exception as e:
-            print(f"Error checking if email is registered: {str(e)}")
-            return False
-
-    # create_account - controller
     def create_account_bank(self, user_id):
         # Get the database configuration parameters
         db_params = self.db_config.get_db_config()
@@ -149,7 +151,7 @@ class DatabaseManager:
             cursor = connection.cursor()
 
             # Set the default values for the new account
-            bank_code = 77  # Suponha que 1 é o código do banco padrão
+            bank_code = 127  # Suponha que 1 é o código do banco padrão
             account_type = 'business_account'
             balance = 10000.00
             overdraft_limit = 1000.00
