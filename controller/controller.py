@@ -10,6 +10,7 @@ from view.create_account_view import CreateAccountView
 from view.home_view import HomeView
 from view.loading_view import LoadingView
 from view.login_view import LoginView
+from view.transfer_dialog_view import TransferDialog
 
 
 class ScreenController:
@@ -156,6 +157,49 @@ class ScreenController:
         else:
             # Show an error message for invalid credentials.
             self.login_view.show_error_message("Invalid email or password")
+
+    def show_transfer_dialog_view(self, user_id, balance):
+
+        self.transfer_view = TransferDialog(user_id, balance)
+        self.transfer_view.set_controller(self)
+        self.transfer_view.show()
+
+    def is_valid_amount(self, amount, balance):
+        try:
+            amount = float(amount)
+            balance = float(balance)
+            if amount > balance:
+                return False  # O valor de transferência não pode ser maior que o saldo
+        except ValueError:
+            return False
+        return True
+
+    def transfer(self, user_id, balance, amount, recipient, branch):
+        # Verificar se o valor da transferência é válido
+        if not self.is_valid_amount(amount, balance):
+            self.transfer_view.show_error_message("Valor inválido.")
+            return
+
+        # Verificar se a conta de destino existe
+        if not self.database_manager.is_valid_account(recipient, branch):
+            self.transfer_view.show_error_message("Conta de destino inválida.")
+            return
+
+        # Se todas as verificações passarem, execute a transferência
+        if self.database_manager.transfer_funds(user_id, recipient, amount):
+            self.transfer_view.show_message("Transferência bem-sucedida.")
+            # Atualize o saldo exibido na interface do usuário (opcional)
+            # self.transfer_view.update_balance(new_balance)
+
+            # Feche a TransferDialog
+            self.transfer_view.close()
+
+            # Atualize o saldo na HomeView (supondo que o método `update_balance` exista)
+            if self.home_view:
+                new_balance = balance - float(amount)
+                self.home_view.update_balance(new_balance)
+        else:
+            self.transfer_view.show_error_message("Falha na transferência.")
 
     def close_create_account_and_show_login(self):
         # Method to close the create_account_view and show the login view.

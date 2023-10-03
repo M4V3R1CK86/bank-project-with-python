@@ -140,6 +140,32 @@ class DatabaseManager:
             print(f"Error validating credentials: {str(e)}")
             return None
 
+    def is_valid_account(self, recipient, branch):
+        # Verifique se a conta e a agência existem no banco de dados
+        db_params = self.db_config.get_db_config()
+        try:
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # SQL query para verificar a existência da conta de destino
+            sql_query = '''
+                SELECT COUNT(*) FROM dark_star_bank.account
+                WHERE account_number = %s AND branch_number = %s
+            '''
+
+            # Execute a consulta com os dados da conta de destino
+            cursor.execute(sql_query, (recipient, branch))
+            count = cursor.fetchone()[0]
+
+            cursor.close()
+            connection.close()
+
+            return count > 0
+
+        except Exception as e:
+            print(f"Erro ao verificar conta de destino: {str(e)}")
+            return False
+
     # create_account - controller
 
     def create_account_bank(self, user_id):
@@ -222,7 +248,6 @@ class DatabaseManager:
                 SELECT * FROM dark_star_bank.account
                 WHERE user_id = %s
             '''
-
             # Execute the SQL query with the user_id
             cursor.execute(sql_query, (user_id, ))
             account_data = cursor.fetchone()
@@ -230,16 +255,53 @@ class DatabaseManager:
             cursor.close()
             connection.close()
 
-            # if account_data:
-            #     # Converte a tupla em um dicionário com nomes de coluna como chaves
-            #     column_names = [desc[0] for desc in cursor.description]
-            #     account_data_dict = dict(zip(column_names, account_data))
-            #     return account_data_dict
-
-            # return None
-
             return account_data
 
         except Exception as e:
             print(f"Error fetching user account data: {str(e)}")
             return None
+
+    def transfer_funds(self, sender_user_id, recipient_account, amount):
+        # Get the database configuration parameters
+        db_params = self.db_config.get_db_config()
+        try:
+            # Establish a database connection
+            connection = pg.connect(**db_params)
+            cursor = connection.cursor()
+
+            # Check if the sender has sufficient balance
+            sender_account_data = self.get_user_account_data(sender_user_id)
+            if sender_account_data and float(sender_account_data[4]) >= float(amount):
+                # Deduct the transfer amount from the sender's account
+                new_balance = float(sender_account_data[4]) - float(amount)
+
+                # Update the sender's account balance
+                sql_update_sender = '''
+                    UPDATE dark_star_bank.account
+                    SET balance = %s
+                    WHERE user_id = %s
+                '''
+                cursor.execute(sql_update_sender,
+                               (new_balance, sender_user_id))
+
+                # Increase the recipient's account balance
+                sql_update_recipient = '''
+                    UPDATE dark_star_bank.account
+                    SET balance = balance + %s
+                    WHERE account_number = %s
+                '''
+                cursor.execute(sql_update_recipient,
+                               (amount, recipient_account))
+
+                connection.commit()
+                cursor.close()
+                connection.close()
+                return True
+            else:
+                cursor.close()
+                connection.close()
+                return False
+
+        except Exception as e:
+            print(f"Error transferring funds: {str(e)}")
+            return False

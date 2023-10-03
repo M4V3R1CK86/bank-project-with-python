@@ -1,14 +1,19 @@
+import re
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QCursor, QIcon, QPixmap
-from PyQt6.QtWidgets import QFrame, QHBoxLayout, QLabel, QPushButton, QWidget
+from PyQt6.QtWidgets import (QDialog, QFrame, QHBoxLayout, QLabel, QMessageBox,
+                             QPushButton, QWidget)
 
 from view.base_view import BaseView
+from view.transfer_dialog_view import TransferDialog
 
 
 class HomeView(BaseView):
     def __init__(self, user_id, first_name, last_name, account_data):
         super().__init__()
-
+        self.user_id = user_id
+        self.balance = float(account_data[4]) if account_data else 0.0
         # Crie uma QWidget principal para conter todos os elementos da tela
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -109,13 +114,11 @@ class HomeView(BaseView):
         welcome.setGeometry(110, 50, 300, 30)
         welcome.setStyleSheet("color: #c9a9a8; font-size: 20px;")
 
-        if account_data:
-            balance = account_data[4]
-            balance_text = f"Balance ${balance}"
-            label_balance = QLabel(balance_text, central_box)
-            label_balance.setAlignment(Qt.AlignmentFlag.AlignLeft)
-            label_balance.setGeometry(20, 120, 320, 30)
-            label_balance.setStyleSheet("color: #c9a9a8; font-size: 20px;")
+        self.balance_text = (f"Balance: {self.balance:.2f} USD")
+        self.label_balance = QLabel(self.balance_text, central_box)
+        self.label_balance.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.label_balance.setGeometry(20, 120, 320, 30)
+        self.label_balance.setStyleSheet("color: #c9a9a8; font-size: 20px;")
 
         chart = QFrame(central_box)
         chart.setGeometry(20, 170, 690, 220)
@@ -138,6 +141,44 @@ class HomeView(BaseView):
             padding-left: 40px; /* Espaçamento à esquerda para o ícone */
         """)
         transfer_btn.setCursor(PointingHandCursor)
+        transfer_btn.setFlat(True)
+
+        def enter_event(event):
+            transfer_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: #fff;  /* Cor de fundo ao passar o mouse */
+                border: 3px solid #fea509;
+                color: #fff;  /* Cor do texto ao passar o mouse */
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        def leave_event(event):
+            transfer_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: none;
+                border: 3px solid #c9a9aD;
+                color: #c9a9a8;
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        transfer_btn.enterEvent = enter_event
+        transfer_btn.leaveEvent = leave_event
+
+        # Connect the "Transfer" button click event to the transfer function
+        # transfer_btn.clicked.connect(self.show_transfer_dialog)
+        # transfer_btn.clicked.connect(self.on_show_transfer_dialog_btn)
+        # transfer_btn.clicked.connect(lambda: self.on_show_transfer_dialog_btn(balance))
+
+        transfer_btn.clicked.connect(
+            lambda: self.on_show_transfer_dialog_btn(self.balance))
 
        # deposit_btn
         deposit_icon = QIcon("resources/img/icon/deposit.png")
@@ -156,6 +197,36 @@ class HomeView(BaseView):
             padding-left: 40px; /* Espaçamento à esquerda para o ícone */
         """)
         deposit_btn.setCursor(PointingHandCursor)
+        deposit_btn.setFlat(True)
+
+        def enter_event(event):
+            deposit_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: #fff;  /* Cor de fundo ao passar o mouse */
+                border: 3px solid #fea509;
+                color: #fff;  /* Cor do texto ao passar o mouse */
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        def leave_event(event):
+            deposit_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: none;
+                border: 3px solid #c9a9aD;
+                color: #c9a9a8;
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        deposit_btn.enterEvent = enter_event
+        deposit_btn.leaveEvent = leave_event
 
         # bill_btn
         bill_icon = QIcon("resources/img/icon/bill.png")
@@ -174,6 +245,36 @@ class HomeView(BaseView):
             padding-left: 40px; /* Espaçamento à esquerda para o ícone */
         """)
         bill_btn.setCursor(PointingHandCursor)
+        bill_btn.setFlat(True)
+
+        def enter_event(event):
+            bill_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: #fff;  /* Cor de fundo ao passar o mouse */
+                border: 3px solid #fea509;
+                color: #fff;  /* Cor do texto ao passar o mouse */
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        def leave_event(event):
+            bill_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: none;
+                border: 3px solid #c9a9aD;
+                color: #c9a9a8;
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        bill_btn.enterEvent = enter_event
+        bill_btn.leaveEvent = leave_event
 
         # loan_btn
         loan_icon = QIcon("resources/img/icon/loan.png")
@@ -192,6 +293,36 @@ class HomeView(BaseView):
             padding-left: 40px; /* Espaçamento à esquerda para o ícone */
         """)
         loan_btn.setCursor(PointingHandCursor)
+        loan_btn.setFlat(True)
+
+        def enter_event(event):
+            loan_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: #fff;  /* Cor de fundo ao passar o mouse */
+                border: 3px solid #fea509;
+                color: #fff;  /* Cor do texto ao passar o mouse */
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        def leave_event(event):
+            loan_btn.setStyleSheet("""
+                border-radius: 40px;
+                background-color: none;
+                border: 3px solid #c9a9aD;
+                color: #c9a9a8;
+                font-size: 14px;
+                margin-left: 0px;
+                background-color: transparent;
+                text-align: left;
+                padding-left: 40px;
+            """)
+
+        loan_btn.enterEvent = enter_event
+        loan_btn.leaveEvent = leave_event
 
         # Adicione uma linha vertical
         line = QFrame()
@@ -223,3 +354,12 @@ class HomeView(BaseView):
         self.close()
         if self.controller:
             self.controller.show_login_view()
+
+    def on_show_transfer_dialog_btn(self, balance):
+        # Crie e exiba a caixa de diálogo de transferência
+        if self.controller:
+            self.controller.show_transfer_dialog_view(self.user_id, balance)
+
+    def update_balance(self, new_balance):
+        self.balance = new_balance
+        self.label_balance.setText(f"Saldo: {self.balance:.2f} BRL")
